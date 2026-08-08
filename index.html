@@ -8,7 +8,7 @@
 <meta property="og:title" content="Deepak Singh Bhadoriya — Product & Growth Analytics">
 <meta property="og:description" content="The story behind a 27% CAC reduction, an XGBoost lead-scoring model, and a rebuilt attribution engine.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e14'/%3E%3Ctext x='32' y='42' font-family='Arial' font-size='28' font-weight='700' fill='%232dd4bf' text-anchor='middle'%3EDB%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e14'/%3E%3Ctext x='32' y='40' font-family='Arial' font-size='21' font-weight='700' fill='%232dd4bf' text-anchor='middle'%3EDSB%3C/text%3E%3C/svg%3E">
 <style>
   :root{
     --bg:#090c11; --bg2:#0d1219; --surface:#111826; --surface2:#151d2c;
@@ -51,7 +51,8 @@
     border-bottom:1px solid var(--border-soft);
   }
   .nav-inner{max-width:var(--maxw); margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between;}
-  .brand{font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.5px; color:var(--ink); display:flex; align-items:center; gap:8px;}
+  .brand{font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.5px; color:var(--ink); display:flex; align-items:center; gap:8px; white-space:nowrap;}
+  @media (max-width:480px){ .brand{font-size:10px; letter-spacing:.2px; gap:5px;} }
   .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--teal); box-shadow:0 0 10px var(--teal);}
   nav.links{display:flex; gap:28px; font-size:13px;}
   nav.links a{color:var(--ink-dim); text-decoration:none; font-family:var(--mono); letter-spacing:.3px; position:relative; padding:4px 0; transition:color .2s;}
@@ -201,7 +202,7 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <div class="brand"><span class="dot"></span>DEEPAK.BHADORIYA</div>
+    <div class="brand"><span class="dot"></span>DEEPAK SINGH BHADORIYA</div>
     <nav class="links">
       <a href="#story" data-nav>Story</a>
       <a href="#impact" data-nav>Impact</a>
