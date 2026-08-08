@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepak Singh Bhadoriya — Product &amp; Growth Analytics</title>
+<meta name="description" content="Product &amp; growth analytics leader — experimentation, lead-scoring, and attribution work at Cars24, grounded in 2.5 years of frontline product ops at Zomato. 27% CAC reduction, XGBoost lead-scoring, +15% booking conversion.">
+<meta property="og:title" content="Deepak Singh Bhadoriya — Product & Growth Analytics">
+<meta property="og:description" content="The story behind a 27% CAC reduction, an XGBoost lead-scoring model, and a rebuilt attribution engine.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e14'/%3E%3Ctext x='32' y='42' font-family='Arial' font-size='28' font-weight='700' fill='%232dd4bf' text-anchor='middle'%3EDB%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#090c11; --bg2:#0d1219; --surface:#111826; --surface2:#151d2c;
+    --border:#212c3d; --border-soft:#1a2432;
+    --ink:#e7ecf3; --ink-dim:#94a3b8; --ink-faint:#5c6b83;
+    --teal:#2dd4bf; --teal-dim:#1a3a37; --amber:#f5a524; --amber-dim:#3a2c10;
+    --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', ui-monospace, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif;
+    --maxw: 1080px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans); background:var(--bg); color:var(--ink);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  ::selection{background:var(--teal); color:#04140f;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  /* background texture */
+  body::before{
+    content:''; position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background-image:
+      linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 0%, transparent 70%);
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 0%, transparent 70%);
+    opacity:.5;
+  }
+
+  /* scroll progress */
+  #progress{position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg, var(--teal), var(--amber)); z-index:200; transition:width .08s linear;}
+
+  /* nav */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(9,12,17,.72); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{max-width:var(--maxw); margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between;}
+  .brand{font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.5px; color:var(--ink); display:flex; align-items:center; gap:8px;}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--teal); box-shadow:0 0 10px var(--teal);}
+  nav.links{display:flex; gap:28px; font-size:13px;}
+  nav.links a{color:var(--ink-dim); text-decoration:none; font-family:var(--mono); letter-spacing:.3px; position:relative; padding:4px 0; transition:color .2s;}
+  nav.links a:hover, nav.links a.active{color:var(--teal);}
+  nav.links a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--teal); transition:width .25s;}
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  .nav-cta{display:flex; align-items:center; gap:14px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:8px;
+    font-family:var(--mono); font-size:12.5px; font-weight:600; letter-spacing:.3px; text-decoration:none;
+    border:1px solid var(--border); color:var(--ink); transition:all .2s; cursor:pointer; background:transparent;
+  }
+  .btn:hover{border-color:var(--teal); color:var(--teal); transform:translateY(-1px);}
+  .btn.primary{background:var(--teal); color:#04140f; border-color:var(--teal);}
+  .btn.primary:hover{background:#3fe0ca; box-shadow:0 0 24px rgba(45,212,191,.35);}
+  #menuToggle{display:none; background:none; border:1px solid var(--border); color:var(--ink); border-radius:8px; padding:8px 10px; cursor:pointer;}
+
+  /* dot side nav */
+  #dotnav{position:fixed; right:26px; top:50%; transform:translateY(-50%); z-index:90; display:flex; flex-direction:column; gap:14px;}
+  #dotnav a{width:9px; height:9px; border-radius:50%; background:var(--border); display:block; position:relative; transition:.25s;}
+  #dotnav a.active{background:var(--teal); box-shadow:0 0 10px var(--teal); transform:scale(1.3);}
+  #dotnav a::before{content:attr(data-label); position:absolute; right:20px; top:50%; transform:translateY(-50%); font-family:var(--mono); font-size:11px; color:var(--ink-dim); white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s; background:var(--surface); padding:3px 8px; border-radius:5px; border:1px solid var(--border);}
+  #dotnav a:hover::before{opacity:1;}
+  @media (max-width:900px){ #dotnav{display:none;} }
+
+  section{padding:120px 0; position:relative;}
+  .eyebrow{font-family:var(--mono); color:var(--teal); font-size:12.5px; letter-spacing:2.5px; text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--teal);}
+  h2.title{font-size:clamp(26px,4vw,38px); font-weight:700; letter-spacing:-.5px; margin-bottom:16px;}
+  .lede{color:var(--ink-dim); font-size:16px; max-width:640px; margin-bottom:56px;}
+
+  /* ---------- HERO ---------- */
+  #hero{min-height:100vh; display:flex; align-items:center; padding-top:80px; position:relative;}
+  #heroCanvas{position:absolute; inset:0; width:100%; height:100%; z-index:-1; opacity:.55;}
+  .hero-grid{display:grid; grid-template-columns:1fr; gap:40px;}
+  .hero-grid > *{min-width:0;}
+  .kicker{font-family:var(--mono); color:var(--amber); font-size:13px; letter-spacing:3px; text-transform:uppercase; margin-bottom:22px; display:flex; align-items:center; gap:10px;}
+  .kicker .blink{width:8px; height:8px; background:var(--amber); border-radius:2px; animation:blink 1.4s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  h1.hero-name{font-size:clamp(40px,7vw,74px); font-weight:800; letter-spacing:-2px; line-height:1.02; margin-bottom:20px;}
+  h1.hero-name .accent{background:linear-gradient(90deg,var(--teal),#7ee8db); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero-role{font-family:var(--mono); font-size:clamp(16px,2.2vw,20px); color:var(--ink-dim); margin-bottom:28px;}
+  .hero-role b{color:var(--ink); font-weight:600;}
+  .hero-desc{max-width:600px; color:var(--ink-dim); font-size:17px; margin-bottom:40px;}
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px;}
+  .hero-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:0; border-top:1px solid var(--border-soft); padding-top:28px; max-width:720px;}
+  .hero-stats .stat{padding-right:24px;}
+  .hero-stats .num{font-family:var(--mono); font-size:28px; font-weight:700; color:var(--teal);}
+  .hero-stats .lbl{font-size:12px; color:var(--ink-faint); margin-top:4px; letter-spacing:.3px;}
+  .scrollcue{position:absolute; bottom:34px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:11px; color:var(--ink-faint); display:flex; flex-direction:column; align-items:center; gap:8px; letter-spacing:2px;}
+  .scrollcue .line{width:1px; height:34px; background:linear-gradient(var(--teal),transparent); animation:scrolldown 1.8s ease-in-out infinite;}
+  @keyframes scrolldown{0%{transform:scaleY(0); transform-origin:top;} 50%{transform:scaleY(1); transform-origin:top;} 50.01%{transform-origin:bottom;} 100%{transform:scaleY(0); transform-origin:bottom;}}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  /* ---------- STORY ---------- */
+  #story{padding-top:100px;}
+  .chapter{display:grid; grid-template-columns:120px 1fr; gap:0 36px; position:relative; padding-bottom:80px;}
+  .chapter:last-child{padding-bottom:0;}
+  .chapter-rail{position:relative; display:flex; flex-direction:column; align-items:center;}
+  .chapter-num{font-family:var(--mono); font-size:13px; color:var(--ink-faint); background:var(--surface); border:1px solid var(--border); width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; z-index:2;}
+  .chapter.in .chapter-num{color:var(--teal); border-color:var(--teal); box-shadow:0 0 0 4px var(--teal-dim);}
+  .chapter-line{position:absolute; top:56px; bottom:-80px; width:1px; background:var(--border);}
+  .chapter:last-child .chapter-line{display:none;}
+  .chapter-body{padding-top:8px; min-width:0;}
+  .chapter-meta{font-family:var(--mono); font-size:12.5px; color:var(--amber); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px;}
+  .chapter-org{color:var(--ink-faint); font-weight:400;}
+  .chapter-title{font-size:23px; font-weight:700; margin-bottom:14px; letter-spacing:-.3px;}
+  .chapter-text{color:var(--ink-dim); font-size:15.5px; max-width:640px; margin-bottom:20px;}
+  .chapter-text b{color:var(--ink); font-weight:600;}
+  .chapter-bullets{list-style:none; display:grid; gap:10px; max-width:660px;}
+  .chapter-bullets li{position:relative; padding-left:22px; font-size:14.5px; color:var(--ink-dim); min-width:0;}
+  .chapter-bullets li::before{content:'▸'; color:var(--teal); font-size:13px; position:absolute; left:0; top:2px;}
+  .chapter-bullets li b{color:var(--ink); font-weight:600;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;}
+  .chip{font-family:var(--mono); font-size:11.5px; color:var(--ink-dim); border:1px solid var(--border); padding:5px 10px; border-radius:6px; background:var(--surface);}
+  @media (max-width:640px){
+    .chapter{grid-template-columns:44px 1fr; gap:0 18px;}
+    .chapter-num{width:36px; height:36px; font-size:11px;}
+    .chapter-line{top:36px; bottom:-80px;}
+  }
+
+  /* ---------- FUNNEL ---------- */
+  #funnel-wrap{margin-top:70px; padding-top:60px; border-top:1px solid var(--border-soft);}
+  .funnel{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:end; max-width:760px; margin:0 auto 20px;}
+  .funnel .seg{position:relative;}
+  .funnel .bar{height:8px; border-radius:4px; background:var(--border); overflow:hidden; margin-bottom:12px;}
+  .funnel .bar i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--teal),var(--amber)); transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+  .funnel .seg h4{font-size:13px; font-weight:600; margin-bottom:4px;}
+  .funnel .seg p{font-family:var(--mono); font-size:11.5px; color:var(--ink-faint);}
+  @media (max-width:640px){ .funnel{grid-template-columns:1fr 1fr;} }
+
+  /* ---------- IMPACT ---------- */
+  .kpi-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:var(--border-soft); border:1px solid var(--border-soft); border-radius:16px; overflow:hidden;}
+  .kpi{background:var(--surface); padding:30px 26px; transition:background .25s;}
+  .kpi:hover{background:var(--surface2);}
+  .kpi .num{font-family:var(--mono); font-size:clamp(30px,4vw,40px); font-weight:800; color:var(--ink); display:flex; align-items:baseline; gap:2px;}
+  .kpi .num .unit{font-size:20px; color:var(--teal);}
+  .kpi .desc{margin-top:10px; font-size:13.5px; color:var(--ink-dim); line-height:1.5;}
+  .kpi .tag{margin-top:14px; font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:1px;}
+
+  /* ---------- SKILLS ---------- */
+  .skill-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px;}
+  .skill-card{background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:24px; transition:border-color .25s, transform .25s;}
+  .skill-card:hover{border-color:var(--teal); transform:translateY(-3px);}
+  .skill-card h4{font-family:var(--mono); font-size:12.5px; color:var(--teal); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:16px;}
+  .skill-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-tags span{font-size:12.5px; padding:6px 11px; border-radius:20px; background:var(--surface2); color:var(--ink-dim); border:1px solid var(--border);}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;}
+  .edu-card{border:1px solid var(--border-soft); border-radius:14px; padding:26px; background:var(--surface); position:relative;}
+  .edu-card .yr{font-family:var(--mono); color:var(--amber); font-size:12.5px; margin-bottom:10px; letter-spacing:.5px;}
+  .edu-card h4{font-size:16.5px; font-weight:700; margin-bottom:6px;}
+  .edu-card p{font-size:13.5px; color:var(--ink-dim);}
+
+  /* ---------- CONTACT ---------- */
+  #contact{text-align:center;}
+  #contact .title{font-size:clamp(30px,5vw,46px);}
+  #contact .lede{margin-left:auto; margin-right:auto;}
+  .contact-links{display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:36px;}
+  .contact-card{display:flex; align-items:center; gap:12px; border:1px solid var(--border-soft); background:var(--surface); padding:16px 22px; border-radius:12px; text-decoration:none; transition:.25s; min-width:220px; justify-content:flex-start;}
+  .contact-card:hover{border-color:var(--teal); transform:translateY(-3px);}
+  .contact-card .ic{width:36px; height:36px; border-radius:9px; background:var(--teal-dim); color:var(--teal); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .contact-card .lbl{font-size:11px; color:var(--ink-faint); font-family:var(--mono); text-transform:uppercase; letter-spacing:.5px;}
+  .contact-card .val{font-size:14px; color:var(--ink); font-weight:600; margin-top:2px;}
+
+  footer{padding:40px 0 50px; text-align:center; color:var(--ink-faint); font-size:12.5px; font-family:var(--mono); border-top:1px solid var(--border-soft); margin-top:60px;}
+  footer a{color:var(--ink-dim); text-decoration:none;}
+  footer a:hover{color:var(--teal);}
+
+  @media (max-width:900px){
+    nav.links{display:none;}
+    #menuToggle{display:block;}
+  }
+  #mobileMenu{display:none; position:fixed; inset:0; z-index:150; background:rgba(6,8,12,.97); backdrop-filter:blur(6px);}
+  #mobileMenu.open{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;}
+  #mobileMenu a{font-family:var(--mono); font-size:20px; color:var(--ink);}
+  #mobileMenu button{position:absolute; top:22px; right:26px; background:none; border:1px solid var(--border); color:var(--ink); border-radius:8px; padding:8px 12px;}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span>DEEPAK.BHADORIYA</div>
+    <nav class="links">
+      <a href="#story" data-nav>Story</a>
+      <a href="#impact" data-nav>Impact</a>
+      <a href="#skills" data-nav>Toolkit</a>
+      <a href="#education" data-nav>Education</a>
+      <a href="#contact" data-nav>Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn primary" href="mailto:imdeepakbhadoriya@gmail.com">Email me</a>
+      <button id="menuToggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<div id="mobileMenu">
+  <button id="menuClose" aria-label="Close menu">✕</button>
+  <a href="#story">Story</a>
+  <a href="#impact">Impact</a>
+  <a href="#skills">Toolkit</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<nav id="dotnav" aria-hidden="true">
+  <a href="#hero" data-label="Intro"></a>
+  <a href="#story" data-label="Story"></a>
+  <a href="#impact" data-label="Impact"></a>
+  <a href="#skills" data-label="Toolkit"></a>
+  <a href="#education" data-label="Education"></a>
+  <a href="#contact" data-label="Contact"></a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker"><span class="blink"></span>GURGAON, INDIA · OPEN TO NEW OPPORTUNITIES</div>
+      <h1 class="hero-name">Deepak Singh<br><span class="accent">Bhadoriya</span></h1>
+      <div class="hero-role">Manager — <b>Product &amp; Growth Analytics</b> · Cars24 Australia</div>
+      <p class="hero-desc">I find the leak in the funnel, build the model that proves it, and ship the fix — 4.5 years turning experiments, lead-scoring and attribution into growth at Cars24, on a foundation of 2.5 years actually sitting on the frontline at Zomato.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#story">Read the story ↓</a>
+        <a class="btn" href="Deepak_Bhadoriya_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a>
+        <a class="btn" href="https://www.linkedin.com/in/deepak-singh-bhadoriya-2a9b4b151/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num" data-count="27" data-suffix="%">0%</div><div class="lbl">CAC REDUCTION</div></div>
+        <div class="stat"><div class="num" data-count="15" data-suffix="%">0%</div><div class="lbl">LEAD→TEST-BOOKING LIFT</div></div>
+        <div class="stat"><div class="num" data-count="7" data-suffix="+">0+</div><div class="lbl">YEARS, OPS TO ANALYTICS</div></div>
+        <div class="stat"><div class="num" data-count="3500" data-suffix="+">0+</div><div class="lbl">LEADS INSTRUMENTED</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section id="story">
+  <div class="wrap">
+    <div class="eyebrow reveal">The Story</div>
+    <h2 class="title reveal">Every dataset has a backstory.</h2>
+    <p class="lede reveal">Mine starts on a support queue, not a dashboard. Three chapters — Zomato, IIM Lucknow, Cars24 — each one answering the same question a little more rigorously: <i>why did the user actually leave?</i></p>
+
+    <div class="chapter reveal">
+      <div class="chapter-rail"><div class="chapter-num">01</div><div class="chapter-line"></div></div>
+      <div class="chapter-body">
+        <div class="chapter-meta">Jul 2019 – Oct 2021 <span class="chapter-org">· Zomato (Eternal), Gurgaon</span></div>
+        <div class="chapter-title">Where the funnel started as a phone call</div>
+        <p class="chapter-text">Deepak's first seat was a <b>Customer Delight Executive</b> role on Zomato's Food@Work vertical — resolving 50–60 tickets a day, ~5 minutes at a time. That frontline view taught him something most analysts never see directly: the exact moment a conversion turns into a complaint. Promoted to <b>Team Lead over 7 agents</b>, he started treating support like a product surface — assigning vertical ownership by individual strength, and building automation that closed feedback loops instead of just logging them.</p>
+        <ul class="chapter-bullets">
+          <li><b>UAT lead</b> for product feature rollouts — partnered with PMs on launch readiness, edge-case validation, and post-launch triage.</li>
+          <li>Launched <b>Food@Work at the Infosys campus mid-COVID</b>, introducing pre-booked, distanced table reservations as a support-side answer to an ops constraint.</li>
+          <li>Built <b>Freshdesk keyword-matching automation</b> that auto-tagged tickets and routed feedback-only cases straight to vendors and cafe managers — no manual triage.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chapter reveal">
+      <div class="chapter-rail"><div class="chapter-num">02</div><div class="chapter-line"></div></div>
+      <div class="chapter-body">
+        <div class="chapter-meta">2022 <span class="chapter-org">· IIM Lucknow, Executive Programme</span></div>
+        <div class="chapter-title">Naming the instinct</div>
+        <p class="chapter-text">Two-plus years of solving problems by feel led Deepak looking for the framework underneath. IIM Lucknow's <b>Executive Programme in Data-Driven Product Management</b> gave those instincts a vocabulary — hypothesis design, statistical rigor, KPI trees — turning <i>"I think this is why users drop off"</i> into something that could be tested, measured, and defended in a room full of stakeholders.</p>
+      </div>
+    </div>
+
+    <div class="chapter reveal">
+      <div class="chapter-rail"><div class="chapter-num">03</div></div>
+      <div class="chapter-body">
+        <div class="chapter-meta">Oct 2021 – Present <span class="chapter-org">· Cars24 Australia, Gurgaon</span></div>
+        <div class="chapter-title">Where the model meets the market</div>
+        <p class="chapter-text">At Cars24, the same question got a much bigger canvas: a marketplace with real acquisition spend on the line. As <b>Data Analytics Manager</b>, Deepak rebuilt how leads get scored, attributed, and acted on — end to end.</p>
+        <ul class="chapter-bullets">
+          <li>Built an <b>XGBoost intent-scoring model</b> that let sales focus on leads likely to convert — cutting the priority queue 9% while holding conversion flat.</li>
+          <li>Ran structured <b>A/B tests on Test Drive Ops</b> for weekend-preferred users, lifting Lead-to-Test-Booking conversion <b>15%</b>.</li>
+          <li>Rebuilt <b>First-Touch attribution</b> from scratch and found 10% of "Product" credit actually belonged to Marketplace — spend got redirected to the real growth driver.</li>
+          <li>Paired the corrected attribution with a <b>listing-optimization engine</b> to pull CAC down <b>27%</b> (110 AUD → 80 AUD) across a 3,500-lead base.</li>
+          <li>Shipped an <b>AI chatbot for off-hours leads</b> (+2pp booking uplift, now piloting in working hours) and a <b>Python + Google Maps geocoding pipeline</b> that standardized addresses across 3,500+ leads.</li>
+          <li>Built a <b>Snowflake + Looker QA platform</b> that randomized call audits across 25 agents, lifting call quality 20% — and caught a ~₹1M conversion risk buried in a CRM restructuring plan before it shipped.</li>
+        </ul>
+        <div class="chip-row">
+          <span class="chip">XGBoost</span><span class="chip">A/B Testing</span><span class="chip">Attribution Modelling</span>
+          <span class="chip">Python</span><span class="chip">Snowflake</span><span class="chip">Looker</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="funnel-wrap" class="reveal">
+      <div class="eyebrow" style="justify-content:center; display:flex;">The Funnel, In One Picture</div>
+      <div class="funnel">
+        <div class="seg"><div class="bar"><i data-width="100" style="width:0"></i></div><h4>Acquire</h4><p>Listing engine · 3,500 leads</p></div>
+        <div class="seg"><div class="bar"><i data-width="91" style="width:0"></i></div><h4>Prioritize</h4><p>XGBoost scoring · −9% volume</p></div>
+        <div class="seg"><div class="bar"><i data-width="78" style="width:0"></i></div><h4>Convert</h4><p>A/B tested ops · +15% booking</p></div>
+        <div class="seg"><div class="bar"><i data-width="70" style="width:0"></i></div><h4>Retain</h4><p>QA + CRM guardrails · +20% quality</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= IMPACT ================= -->
+<section id="impact">
+  <div class="wrap">
+    <div class="eyebrow reveal">By The Numbers</div>
+    <h2 class="title reveal">Impact, not activity.</h2>
+    <p class="lede reveal">Every project below shipped with a before/after — because "we launched it" isn't a result.</p>
+    <div class="kpi-grid reveal">
+      <div class="kpi"><div class="num"><span data-count="27">0</span><span class="unit">%↓</span></div><div class="desc">CAC reduced — 110 AUD → 80 AUD — via a marketplace listing-optimization engine.</div><div class="tag">Cars24 · Growth</div></div>
+      <div class="kpi"><div class="num"><span data-count="15">0</span><span class="unit">%↑</span></div><div class="desc">Lead-to-Test-Booking conversion, from A/B tested Test Drive Ops targeting.</div><div class="tag">Cars24 · Experimentation</div></div>
+      <div class="kpi"><div class="num"><span data-count="9">0</span><span class="unit">%↓</span></div><div class="desc">Priority-lead volume cut by the XGBoost intent model — conversion held flat.</div><div class="tag">Cars24 · ML</div></div>
+      <div class="kpi"><div class="num"><span data-count="10">0</span><span class="unit">%</span></div><div class="desc">Sales misattribution exposed and corrected by a rebuilt First-Touch model.</div><div class="tag">Cars24 · Attribution</div></div>
+      <div class="kpi"><div class="num"><span data-count="2">0</span><span class="unit">pp↑</span></div><div class="desc">Booking conversion from an off-hours AI chatbot, now piloting in working hours too.</div><div class="tag">Cars24 · AI</div></div>
+      <div class="kpi"><div class="num"><span data-count="20">0</span><span class="unit">%↑</span></div><div class="desc">Call quality &amp; compliance across 25 agents, via randomized Snowflake/Looker QA audits.</div><div class="tag">Cars24 · QA</div></div>
+      <div class="kpi"><div class="num">₹<span data-count="1">0</span><span class="unit">M</span></div><div class="desc">Conversion-impact risk flagged in a CRM restructuring plan — rolled back before it shipped.</div><div class="tag">Cars24 · Risk</div></div>
+      <div class="kpi"><div class="num"><span data-count="3500" data-suffix="+">0</span><span class="unit">+</span></div><div class="desc">Leads geocoded to clean PIN/city/state fields via a Python + Google Maps pipeline.</div><div class="tag">Cars24 · Data Eng</div></div>
+      <div class="kpi"><div class="num"><span data-count="7">0</span><span class="unit">yrs</span></div><div class="desc">Combined experience — 4.5 in analytics &amp; experimentation, 2.5 grounded in frontline product ops.</div><div class="tag">Career</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow reveal">The Toolkit</div>
+    <h2 class="title reveal">What's actually under the hood.</h2>
+    <p class="lede reveal">Not a keyword list — the tools that show up in every chapter above.</p>
+    <div class="skill-grid reveal">
+      <div class="skill-card">
+        <h4>Experimentation &amp; Growth</h4>
+        <div class="skill-tags"><span>A/B Testing</span><span>Multivariate Testing</span><span>Hypothesis Testing</span><span>Funnel &amp; Cohort Analysis</span><span>Segmentation</span><span>Attribution Modelling</span><span>CAC Optimisation</span><span>Lifecycle Analysis</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>Languages &amp; Querying</h4>
+        <div class="skill-tags"><span>SQL</span><span>Python</span><span>BigQuery</span><span>Snowflake</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>BI &amp; Visualisation</h4>
+        <div class="skill-tags"><span>Tableau</span><span>Power BI</span><span>Looker</span><span>Google Data Studio</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>ML / AI</h4>
+        <div class="skill-tags"><span>XGBoost</span><span>Vertex GenAI</span><span>Prompt Engineering</span><span>ChatGPT</span><span>Perplexity</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>Data Engineering</h4>
+        <div class="skill-tags"><span>ETL Pipelines</span><span>Data Warehousing</span><span>Snowflake Schema</span><span>Automated Reporting</span></div>
+      </div>
+      <div class="skill-card">
+        <h4>Product &amp; Business</h4>
+        <div class="skill-tags"><span>KPI Definition</span><span>Stakeholder Management</span><span>Experimentation Design</span><span>Growth Strategy</span><span>UAT</span><span>Roadmap Inputs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education">
+  <div class="wrap">
+    <div class="eyebrow reveal">Credentials</div>
+    <h2 class="title reveal">Education</h2>
+    <div class="edu-row reveal">
+      <div class="edu-card">
+        <div class="yr">2022</div>
+        <h4>Data-Driven Product Management</h4>
+        <p>IIM Lucknow — Executive Programme</p>
+      </div>
+      <div class="edu-card">
+        <div class="yr">2014 – 2018</div>
+        <h4>B.E. Electronics &amp; Instrumentation</h4>
+        <p>Prime Minister Scholarship, Government of India</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="justify-content:center;">Get In Touch</div>
+    <h2 class="title reveal">Let's talk growth.</h2>
+    <p class="lede reveal">Open to conversations about product &amp; growth analytics roles — or just talking shop about funnels, attribution, and the models behind them.</p>
+    <div class="contact-links reveal">
+      <a class="contact-card" href="mailto:imdeepakbhadoriya@gmail.com">
+        <div class="ic">✉</div>
+        <div><div class="lbl">Email</div><div class="val">imdeepakbhadoriya@gmail.com</div></div>
+      </a>
+      <a class="contact-card" href="tel:+918269732301">
+        <div class="ic">☎</div>
+        <div><div class="lbl">Phone</div><div class="val">+91 82697 32301</div></div>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/deepak-singh-bhadoriya-2a9b4b151/" target="_blank" rel="noopener">
+        <div class="ic">in</div>
+        <div><div class="lbl">LinkedIn</div><div class="val">deepak-singh-bhadoriya</div></div>
+      </a>
+      <a class="contact-card" href="https://github.com/DSB-faw" target="_blank" rel="noopener">
+        <div class="ic">⌥</div>
+        <div><div class="lbl">GitHub</div><div class="val">DSB-faw</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Built &amp; hosted by Deepak Singh Bhadoriya · Gurgaon, India · © <span id="yr"></span></div>
+</footer>
+
+<script>
+// ---------- year ----------
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ---------- mobile menu ----------
+const menuToggle = document.getElementById('menuToggle');
+const menuClose = document.getElementById('menuClose');
+const mobileMenu = document.getElementById('mobileMenu');
+menuToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
+menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+// ---------- scroll progress ----------
+const progress = document.getElementById('progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progress.style.width = scrolled + '%';
+}
+document.addEventListener('scroll', updateProgress, {passive:true});
+updateProgress();
+
+// ---------- nav active state + dotnav ----------
+const sections = ['hero','story','impact','skills','education','contact'].map(id => document.getElementById(id));
+const navLinks = document.querySelectorAll('nav.links a[data-nav]');
+const dotLinks = document.querySelectorAll('#dotnav a');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const id = entry.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+      dotLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+    }
+  });
+}, {rootMargin:'-40% 0px -55% 0px'});
+sections.forEach(s => s && io.observe(s));
+
+// ---------- reveal on scroll ----------
+const revealEls = document.querySelectorAll('.reveal, .chapter');
+const revealIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      revealIO.unobserve(entry.target);
+    }
+  });
+}, {threshold:.15});
+revealEls.forEach(el => revealIO.observe(el));
+
+// ---------- count-up numbers ----------
+function countUp(el){
+  const target = parseFloat(el.getAttribute('data-count'));
+  const suffix = el.getAttribute('data-suffix') || '';
+  const dur = 1400;
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min(1, (now - start) / dur);
+    const eased = 1 - Math.pow(1-p, 3);
+    const val = Math.round(target * eased);
+    el.textContent = val.toLocaleString() + (p >= 1 ? '' : '');
+    if(p < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString();
+  }
+  requestAnimationFrame(tick);
+}
+const countEls = document.querySelectorAll('[data-count]');
+const countIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      countUp(entry.target);
+      countIO.unobserve(entry.target);
+    }
+  });
+}, {threshold:.5});
+countEls.forEach(el => countIO.observe(el));
+
+// ---------- funnel bars ----------
+const funnelBars = document.querySelectorAll('.funnel .bar i');
+const funnelIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      funnelBars.forEach(bar => { bar.style.width = bar.getAttribute('data-width') + '%'; });
+      funnelIO.disconnect();
+    }
+  });
+}, {threshold:.4});
+if(funnelBars.length) funnelIO.observe(document.getElementById('funnel-wrap'));
+
+// ---------- hero canvas: data network ----------
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function resizeCanvas(){
+  canvas.width = canvas.offsetWidth * devicePixelRatio;
+  canvas.height = canvas.offsetHeight * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+}
+function initParticles(){
+  const count = Math.min(60, Math.floor(canvas.offsetWidth / 22));
+  particles = Array.from({length:count}, () => ({
+    x: Math.random() * canvas.offsetWidth,
+    y: Math.random() * canvas.offsetHeight,
+    vx: (Math.random()-0.5) * 0.25,
+    vy: (Math.random()-0.5) * 0.25,
+  }));
+}
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.offsetWidth, canvas.offsetHeight);
+  const maxDist = 130;
+  for(let i=0;i<particles.length;i++){
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    if(p.x < 0 || p.x > canvas.offsetWidth) p.vx *= -1;
+    if(p.y < 0 || p.y > canvas.offsetHeight) p.vy *= -1;
+    for(let j=i+1;j<particles.length;j++){
+      const q = particles[j];
+      const dx = p.x-q.x, dy = p.y-q.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < maxDist){
+        ctx.strokeStyle = `rgba(45,212,191,${(1-dist/maxDist)*0.18})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
+      }
+    }
+  }
+  particles.forEach(p => {
+    ctx.fillStyle = 'rgba(45,212,191,0.55)';
+    ctx.beginPath(); ctx.arc(p.x,p.y,1.6,0,Math.PI*2); ctx.fill();
+  });
+  if(!reduceMotion) requestAnimationFrame(drawParticles);
+}
+if(canvas){
+  resizeCanvas(); initParticles();
+  if(!reduceMotion) requestAnimationFrame(drawParticles); else drawParticles();
+  window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+}
+</script>
+</body>
+</html>
