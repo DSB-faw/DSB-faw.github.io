@@ -102,6 +102,13 @@
   .scrollcue .line{width:1px; height:34px; background:linear-gradient(var(--teal),transparent); animation:scrolldown 1.8s ease-in-out infinite;}
   @keyframes scrolldown{0%{transform:scaleY(0); transform-origin:top;} 50%{transform:scaleY(1); transform-origin:top;} 50.01%{transform-origin:bottom;} 100%{transform:scaleY(0); transform-origin:bottom;}}
 
+  /* ---------- COMPANIES ---------- */
+  #companies{padding:8px 0 44px;}
+  .company-row{display:flex; justify-content:center; align-items:center; gap:52px; flex-wrap:wrap; margin-top:22px;}
+  .co-logo{height:30px; width:auto; object-fit:contain; opacity:.9; filter:saturate(.9); transition:opacity .2s, transform .2s;}
+  .co-logo:hover{opacity:1; transform:translateY(-2px);}
+  @media (max-width:480px){ .co-logo{height:22px;} .company-row{gap:32px;} }
+
   /* ---------- reveal ---------- */
   .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
   .reveal.in{opacity:1; transform:none;}
@@ -301,6 +308,17 @@
   <div class="scrollcue"><span>SCROLL</span><span class="line"></span></div>
 </section>
 
+<!-- ================= COMPANIES ================= -->
+<section id="companies">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="justify-content:center; display:flex;">Worked At</div>
+    <div class="company-row reveal">
+      <img class="co-logo" src="assets/zomato-logo.svg" alt="Zomato">
+      <img class="co-logo" src="assets/cars24-logo.png" alt="Cars24">
+    </div>
+  </div>
+</section>
+
 <!-- ================= STORY ================= -->
 <section id="story">
   <div class="wrap">
@@ -313,9 +331,9 @@
       <div class="chapter-body">
         <div class="chapter-meta">Jul 2019 – Oct 2021 <span class="chapter-org">· Zomato (Eternal), Gurgaon</span></div>
         <div class="chapter-title">Where the funnel started as a phone call</div>
-        <p class="chapter-text">Deepak's first seat was a <b>Customer Delight Executive</b> role on Zomato's Food@Work vertical — resolving 50–60 tickets a day, ~5 minutes at a time. That frontline view taught him something most analysts never see directly: the exact moment a conversion turns into a complaint. Promoted to <b>Team Lead over 7 agents</b>, he started treating support like a product surface — assigning vertical ownership by individual strength, and building automation that closed feedback loops instead of just logging them.</p>
+        <p class="chapter-text">Deepak's first seat was a <b>Customer Delight Executive</b> — chat, call, and ticket support — for <b>Food@Work</b>, a B2B cafeteria startup that Zomato acquired early in his tenure. That frontline view taught him something most analysts never see directly: the exact moment a conversion turns into a complaint. Promoted to <b>Team Lead over 7 agents</b>, he started treating support like a product surface — assigning vertical ownership by individual strength, and building automation that closed feedback loops instead of just logging them.</p>
         <ul class="chapter-bullets">
-          <li><b>UAT lead</b> for product feature rollouts — partnered with PMs on launch readiness, edge-case validation, and post-launch triage.</li>
+          <li>Supported product feature rollouts as the front-line <b>UAT/product-support</b> contact — validated edge cases, logged and tracked bugs, and flagged release-blocking issues to PMs.</li>
           <li>Launched <b>Food@Work at the Infosys campus mid-COVID</b>, introducing pre-booked, distanced table reservations as a support-side answer to an ops constraint.</li>
           <li>Built <b>Freshdesk keyword-matching automation</b> that auto-tagged tickets and routed feedback-only cases straight to vendors and cafe managers — no manual triage.</li>
         </ul>
@@ -342,7 +360,7 @@
           <li>Ran structured <b>A/B tests on Test Drive Ops</b> for weekend-preferred users, lifting Lead-to-Test-Drive-Booking conversion <b>15%</b>.</li>
           <li>Rebuilt <b>First-Touch attribution</b> from scratch and found 10% of "Product" credit actually belonged to Marketplace — spend got redirected to the real growth driver.</li>
           <li>Paired the corrected attribution with a <b>listing-optimization engine</b> to pull CAC down <b>27%</b> (110 AUD → 80 AUD) across a 3,500-lead base.</li>
-          <li>Shipped an <b>AI chatbot for off-hours leads</b> (+2pp booking uplift, now piloting in working hours) and a <b>Python + Google Maps geocoding pipeline</b> that standardized addresses across 3,500+ leads.</li>
+          <li>Shipped an <b>AI chatbot for off-hours leads</b> (+2pp booking uplift, now piloting in working hours) and a <b>Python + Google Maps geocoding pipeline</b> that standardized addresses across 3,500+ leads/month.</li>
           <li>Built a <b>Snowflake + Looker QA platform</b> that randomized call audits across 25 agents, lifting call quality 20% — and caught a ~₹1M conversion risk buried in a CRM restructuring plan before it shipped.</li>
         </ul>
         <div class="chip-row">
@@ -379,7 +397,7 @@
       <div class="kpi"><div class="num"><span data-count="2">0</span><span class="unit">pp↑</span></div><div class="desc">Booking conversion from an off-hours AI chatbot, now piloting in working hours too.</div><div class="tag">Cars24 · AI</div></div>
       <div class="kpi"><div class="num"><span data-count="20">0</span><span class="unit">%↑</span></div><div class="desc">Call quality &amp; compliance across 25 agents, via randomized Snowflake/Looker QA audits.</div><div class="tag">Cars24 · QA</div></div>
       <div class="kpi"><div class="num">₹<span data-count="1">0</span><span class="unit">M</span></div><div class="desc">Conversion-impact risk flagged in a CRM restructuring plan — rolled back before it shipped.</div><div class="tag">Cars24 · Risk</div></div>
-      <div class="kpi"><div class="num"><span data-count="3500" data-suffix="+">0</span><span class="unit">+</span></div><div class="desc">Leads geocoded to clean PIN/city/state fields via a Python + Google Maps pipeline.</div><div class="tag">Cars24 · Data Eng</div></div>
+      <div class="kpi"><div class="num"><span data-count="3500" data-suffix="+">0</span><span class="unit">+</span></div><div class="desc">Leads geocoded to clean PIN/city/state fields every month, via a Python + Google Maps pipeline.</div><div class="tag">Cars24 · Data Eng</div></div>
       <div class="kpi"><div class="num"><span data-count="7">0</span><span class="unit">yrs</span></div><div class="desc">Combined experience — 4.5 in analytics &amp; experimentation, 2.5 grounded in frontline product ops.</div><div class="tag">Career</div></div>
     </div>
   </div>
@@ -413,13 +431,13 @@
     <div class="work-list reveal">
       <div class="work-row">
         <div class="work-row-status">Coming Soon</div>
-        <div class="work-row-title">New Dashboard</div>
-        <div class="work-row-desc">Another dataset, another deep dive — in progress.</div>
+        <div class="work-row-title">Next Problem to Solve</div>
+        <div class="work-row-desc">Another dataset, another problem worth digging into — in progress.</div>
       </div>
       <a class="work-row link-row" href="#contact">
         <div class="work-row-status">Open To Ideas</div>
-        <div class="work-row-title">Got a dataset in mind?</div>
-        <div class="work-row-desc">Tell me what you'd want turned into a dashboard →</div>
+        <div class="work-row-title">Got a problem? Let's solve it analytically.</div>
+        <div class="work-row-desc">Tell me what you're working through →</div>
       </a>
     </div>
   </div>
@@ -450,7 +468,7 @@
       </div>
       <div class="skill-card">
         <h4>Data Engineering</h4>
-        <div class="skill-tags"><span>ETL Pipelines</span><span>Data Warehousing</span><span>Snowflake Schema</span><span>Automated Reporting</span></div>
+        <div class="skill-tags"><span>ETL Pipelines</span><span>Data Warehousing</span><span>Snowflake Schema</span><span>Automated Reporting</span><span>Git</span><span>GitHub</span><span>CI/CD</span></div>
       </div>
       <div class="skill-card">
         <h4>Product &amp; Business</h4>
