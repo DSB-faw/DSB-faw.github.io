@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deepak Singh Bhadoriya — Product &amp; Growth Analytics</title>
-<meta name="description" content="Product &amp; growth analytics leader — experimentation, lead-scoring, and attribution work at Cars24, grounded in 2.5 years of frontline product ops at Zomato. 27% CAC reduction, XGBoost lead-scoring, +15% booking conversion.">
+<meta name="description" content="Product &amp; growth analytics leader — 7 years across Cars24 and Zomato. 27% CAC reduction, XGBoost lead-scoring, +15% booking conversion. Open to freelance &amp; consulting projects.">
 <meta property="og:title" content="Deepak Singh Bhadoriya — Product & Growth Analytics">
-<meta property="og:description" content="The story behind a 27% CAC reduction, an XGBoost lead-scoring model, and a rebuilt attribution engine.">
+<meta property="og:description" content="The story behind a 27% CAC reduction, an XGBoost lead-scoring model, and a rebuilt attribution engine. Open to freelance & consulting projects.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e14'/%3E%3Ctext x='32' y='40' font-family='Arial' font-size='21' font-weight='700' fill='%232dd4bf' text-anchor='middle'%3EDSB%3C/text%3E%3C/svg%3E">
 <style>
@@ -95,6 +95,9 @@
   .hero-role b{color:var(--ink); font-weight:600;}
   .hero-desc{max-width:600px; color:var(--ink-dim); font-size:17px; margin-bottom:40px;}
   .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px;}
+  .hero-avail{display:inline-flex; align-items:center; gap:9px; font-family:var(--mono); font-size:12.5px; color:var(--teal); border:1px solid var(--teal); background:var(--teal-dim); padding:6px 14px; border-radius:20px; margin-bottom:22px; letter-spacing:.3px;}
+  .hero-avail .avail-dot{width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); animation:availpulse 1.6s step-end infinite; flex-shrink:0;}
+  @keyframes availpulse{50%{opacity:.25;}}
   .scrollcue{position:absolute; bottom:34px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:11px; color:var(--ink-faint); display:flex; flex-direction:column; align-items:center; gap:8px; letter-spacing:2px;}
   .scrollcue .line{width:1px; height:34px; background:linear-gradient(var(--teal),transparent); animation:scrolldown 1.8s ease-in-out infinite;}
   @keyframes scrolldown{0%{transform:scaleY(0); transform-origin:top;} 50%{transform:scaleY(1); transform-origin:top;} 50.01%{transform-origin:bottom;} 100%{transform:scaleY(0); transform-origin:bottom;}}
@@ -222,6 +225,12 @@
     outline:none; border-color:var(--teal);
   }
   .contact-form textarea{min-height:110px;}
+  .contact-form .field select{
+    width:100%; background:var(--surface); border:1px solid var(--border-soft); border-radius:9px;
+    padding:11px 13px; color:var(--ink); font-family:var(--sans); font-size:14px;
+    transition:border-color .2s; box-sizing:border-box;
+  }
+  .contact-form .field select:focus{outline:none; border-color:var(--teal);}
   .combo-field{display:flex; gap:8px;}
   .combo-field select{
     flex:0 0 auto; background:var(--surface); border:1px solid var(--border-soft); border-radius:9px;
@@ -304,9 +313,11 @@
     <div>
       <h1 class="hero-name">Deepak Singh<br><span class="accent">Bhadoriya</span></h1>
       <div class="hero-role"><b>AI-First</b>, Data-Driven Growth Builder</div>
-      <p class="hero-desc">I find the leak in the funnel, build the model that proves it, and ship the fix — 4.5 years turning experiments, lead-scoring and attribution into growth at Cars24, on a foundation of 2.5 years actually sitting on the frontline at Zomato.</p>
+      <div class="hero-avail"><span class="avail-dot"></span>Open to freelance &amp; consulting projects</div>
+      <p class="hero-desc">I find the leak in the funnel, build the model that proves it, and ship the fix — 7 years across growth, experimentation and analytics: 4.5 at Cars24 turning lead-scoring and attribution into growth, 2.5 grounded on the frontline at Zomato.</p>
       <div class="hero-cta">
-        <a class="btn primary" href="#story">Read the story ↓</a>
+        <a class="btn primary" href="#contact">Let's talk about your project →</a>
+        <a class="btn" href="#story">Read the story ↓</a>
       </div>
     </div>
   </div>
@@ -509,7 +520,7 @@
   <div class="wrap">
     <div class="eyebrow reveal" style="justify-content:center;">Get In Touch</div>
     <h2 class="title reveal">Let's talk growth.</h2>
-    <p class="lede reveal">Always up for talking shop about growth, attribution, and the models behind them — reach out anytime.</p>
+    <p class="lede reveal">Open to freelance &amp; consulting projects in growth analytics — tell me about what you're working on, or just talk shop about funnels, attribution, and the models behind them.</p>
 
     <form id="contactForm" class="contact-form reveal">
       <input type="hidden" name="access_key" value="13042e8b-d71d-4306-8ec3-5db40f153509">
@@ -531,6 +542,28 @@
             </select>
             <input id="cf-contact" type="text" name="contact_value" required placeholder="you@email.com">
           </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="cf-project-type">Project type</label>
+          <select id="cf-project-type" name="project_type">
+            <option value="Dashboard / Analytics Build">Dashboard / Analytics Build</option>
+            <option value="Growth & Experimentation Audit">Growth &amp; Experimentation Audit</option>
+            <option value="Ad-hoc Analysis">Ad-hoc Analysis</option>
+            <option value="Ongoing Retainer">Ongoing Retainer</option>
+            <option value="Not sure yet / Other" selected>Not sure yet / Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cf-budget">Budget range</label>
+          <select id="cf-budget" name="budget_range">
+            <option value="Not sure yet" selected>Not sure yet</option>
+            <option value="< $500">&lt; $500</option>
+            <option value="$500 – $2,000">$500 – $2,000</option>
+            <option value="$2,000 – $5,000">$2,000 – $5,000</option>
+            <option value="$5,000+">$5,000+</option>
+          </select>
         </div>
       </div>
       <div class="field">
