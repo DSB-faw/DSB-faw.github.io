@@ -222,6 +222,15 @@
     outline:none; border-color:var(--teal);
   }
   .contact-form textarea{min-height:110px;}
+  .combo-field{display:flex; gap:8px;}
+  .combo-field select{
+    flex:0 0 auto; background:var(--surface); border:1px solid var(--border-soft); border-radius:9px;
+    padding:11px 8px; color:var(--ink); font-family:var(--sans); font-size:13px; transition:border-color .2s;
+    max-width:118px;
+  }
+  .combo-field select:focus{outline:none; border-color:var(--teal);}
+  .combo-field input{flex:1; min-width:0;}
+  @media (max-width:560px){ .combo-field{flex-direction:column;} .combo-field select{max-width:none;} }
   .contact-form .hp{position:absolute; left:-9999px; opacity:0; pointer-events:none;}
   .contact-form button[type="submit"]{justify-self:start; cursor:pointer; border:none;}
   .contact-form button[type="submit"]:disabled{opacity:.6; cursor:default;}
@@ -512,8 +521,16 @@
           <input id="cf-name" type="text" name="name" required placeholder="Your name">
         </div>
         <div class="field">
-          <label for="cf-contact">Email or phone</label>
-          <input id="cf-contact" type="text" name="contact" required placeholder="How should I reach you back?">
+          <label for="cf-contact">Reach me via</label>
+          <div class="combo-field">
+            <select id="cf-contact-method" name="contact_method">
+              <option value="Email">Email</option>
+              <option value="Phone">Phone</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="LinkedIn">LinkedIn</option>
+            </select>
+            <input id="cf-contact" type="text" name="contact_value" required placeholder="you@email.com">
+          </div>
         </div>
       </div>
       <div class="field">
@@ -686,6 +703,22 @@ if(canvas){
 const cfForm = document.getElementById('contactForm');
 const cfSubmit = document.getElementById('cf-submit');
 const cfStatus = document.getElementById('cf-status');
+const cfMethod = document.getElementById('cf-contact-method');
+const cfContactInput = document.getElementById('cf-contact');
+const CF_PLACEHOLDERS = {
+  Email: {type:'email', placeholder:'you@email.com'},
+  Phone: {type:'tel', placeholder:'+91 XXXXX XXXXX'},
+  WhatsApp: {type:'tel', placeholder:'+91 XXXXX XXXXX'},
+  LinkedIn: {type:'text', placeholder:'linkedin.com/in/you'},
+};
+if(cfMethod && cfContactInput){
+  cfMethod.addEventListener('change', () => {
+    const cfg = CF_PLACEHOLDERS[cfMethod.value] || CF_PLACEHOLDERS.Email;
+    cfContactInput.type = cfg.type;
+    cfContactInput.placeholder = cfg.placeholder;
+    cfContactInput.value = '';
+  });
+}
 if(cfForm){
   cfForm.addEventListener('submit', async (e) => {
     e.preventDefault();
