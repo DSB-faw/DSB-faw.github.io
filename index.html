@@ -89,9 +89,6 @@
   #heroCanvas{position:absolute; inset:0; width:100%; height:100%; z-index:-1; opacity:.55;}
   .hero-grid{display:grid; grid-template-columns:1fr; gap:40px;}
   .hero-grid > *{min-width:0;}
-  .kicker{font-family:var(--mono); color:var(--amber); font-size:13px; letter-spacing:3px; text-transform:uppercase; margin-bottom:22px; display:flex; align-items:center; gap:10px;}
-  .kicker .blink{width:8px; height:8px; background:var(--amber); border-radius:2px; animation:blink 1.4s step-end infinite;}
-  @keyframes blink{50%{opacity:0;}}
   h1.hero-name{font-size:clamp(40px,7vw,74px); font-weight:800; letter-spacing:-2px; line-height:1.02; margin-bottom:20px;}
   h1.hero-name .accent{background:linear-gradient(90deg,var(--teal),#7ee8db); -webkit-background-clip:text; background-clip:text; color:transparent;}
   .hero-role{font-family:var(--mono); font-size:clamp(16px,2.2vw,20px); color:var(--ink-dim); margin-bottom:28px;}
@@ -295,7 +292,6 @@
   <canvas id="heroCanvas"></canvas>
   <div class="wrap hero-grid">
     <div>
-      <div class="kicker"><span class="blink"></span>GURGAON, INDIA · OPEN TO NEW OPPORTUNITIES</div>
       <h1 class="hero-name">Deepak Singh<br><span class="accent">Bhadoriya</span></h1>
       <div class="hero-role"><b>Growth &amp; Product Analytics Manager</b> · Cars24 Australia</div>
       <p class="hero-desc">I find the leak in the funnel, build the model that proves it, and ship the fix — 4.5 years turning experiments, lead-scoring and attribution into growth at Cars24, on a foundation of 2.5 years actually sitting on the frontline at Zomato.</p>
@@ -494,6 +490,10 @@
         <div class="yr">2022</div>
         <h4>Data-Driven Product Management</h4>
         <p>IIM Lucknow — Executive Programme</p>
+        <div class="chip-row" style="margin-top:14px;">
+          <span class="chip">GTM</span><span class="chip">A/B Testing</span><span class="chip">Market Research</span>
+          <span class="chip">XIRR</span><span class="chip">Product Management</span>
+        </div>
       </div>
       <div class="edu-card">
         <div class="yr">2014 – 2018</div>
@@ -509,7 +509,7 @@
   <div class="wrap">
     <div class="eyebrow reveal" style="justify-content:center;">Get In Touch</div>
     <h2 class="title reveal">Let's talk growth.</h2>
-    <p class="lede reveal">Open to conversations about product &amp; growth analytics roles — or just talking shop about funnels, attribution, and the models behind them.</p>
+    <p class="lede reveal">Always up for talking shop about growth, attribution, and the models behind them — reach out anytime.</p>
 
     <form id="contactForm" class="contact-form reveal">
       <input type="hidden" name="access_key" value="13042e8b-d71d-4306-8ec3-5db40f153509">
