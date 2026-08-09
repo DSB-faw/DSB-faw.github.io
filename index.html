@@ -153,6 +153,32 @@
   .kpi .desc{margin-top:10px; font-size:13.5px; color:var(--ink-dim); line-height:1.5;}
   .kpi .tag{margin-top:14px; font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:1px;}
 
+  /* ---------- WORK ---------- */
+  .work-featured{display:grid; grid-template-columns:1.1fr 1fr; gap:0; border:1px solid var(--border-soft); border-radius:16px; overflow:hidden; background:var(--surface);}
+  .work-media{position:relative; background:#000; min-height:220px;}
+  .work-media img{width:100%; height:100%; object-fit:cover; object-position:top; display:block;}
+  .work-body{padding:32px 34px; display:flex; flex-direction:column; justify-content:center;}
+  .work-badge{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--teal); background:var(--teal-dim); border:1px solid var(--teal); padding:4px 10px; border-radius:20px; margin-bottom:14px; width:fit-content;}
+  .work-badge::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--teal); box-shadow:0 0 6px var(--teal);}
+  .work-body h3{font-size:22px; font-weight:700; margin-bottom:12px; letter-spacing:-.3px;}
+  .work-body p{font-size:14.5px; color:var(--ink-dim); line-height:1.6; margin-bottom:18px;}
+  .work-links{display:flex; gap:12px; margin-top:6px; flex-wrap:wrap;}
+  @media (max-width:800px){
+    .work-featured{grid-template-columns:1fr;}
+    .work-media{min-height:0;}
+    .work-media img{height:auto; object-fit:initial;}
+  }
+
+  .work-list{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;}
+  .work-row{display:block; border:1px dashed var(--border-soft); border-radius:14px; padding:22px 24px; background:transparent; transition:border-color .25s; text-decoration:none; color:inherit;}
+  .work-row:hover{border-color:var(--ink-faint);}
+  .work-row.link-row{cursor:pointer;}
+  .work-row.link-row:hover{border-color:var(--teal);}
+  .work-row-status{font-family:var(--mono); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px;}
+  .work-row-title{font-size:15.5px; font-weight:700; margin-bottom:6px;}
+  .work-row-desc{font-size:13px; color:var(--ink-faint); line-height:1.5;}
+  @media (max-width:640px){ .work-list{grid-template-columns:1fr;} }
+
   /* ---------- SKILLS ---------- */
   .skill-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px;}
   .skill-card{background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:24px; transition:border-color .25s, transform .25s;}
@@ -225,6 +251,7 @@
     <nav class="links">
       <a href="#story" data-nav>Story</a>
       <a href="#impact" data-nav>Impact</a>
+      <a href="#work" data-nav>Work</a>
       <a href="#skills" data-nav>Toolkit</a>
       <a href="#education" data-nav>Education</a>
       <a href="#contact" data-nav>Contact</a>
@@ -240,6 +267,7 @@
   <button id="menuClose" aria-label="Close menu">✕</button>
   <a href="#story">Story</a>
   <a href="#impact">Impact</a>
+  <a href="#work">Work</a>
   <a href="#skills">Toolkit</a>
   <a href="#education">Education</a>
   <a href="#contact">Contact</a>
@@ -249,6 +277,7 @@
   <a href="#hero" data-label="Intro"></a>
   <a href="#story" data-label="Story"></a>
   <a href="#impact" data-label="Impact"></a>
+  <a href="#work" data-label="Work"></a>
   <a href="#skills" data-label="Toolkit"></a>
   <a href="#education" data-label="Education"></a>
   <a href="#contact" data-label="Contact"></a>
@@ -352,6 +381,46 @@
       <div class="kpi"><div class="num">₹<span data-count="1">0</span><span class="unit">M</span></div><div class="desc">Conversion-impact risk flagged in a CRM restructuring plan — rolled back before it shipped.</div><div class="tag">Cars24 · Risk</div></div>
       <div class="kpi"><div class="num"><span data-count="3500" data-suffix="+">0</span><span class="unit">+</span></div><div class="desc">Leads geocoded to clean PIN/city/state fields via a Python + Google Maps pipeline.</div><div class="tag">Cars24 · Data Eng</div></div>
       <div class="kpi"><div class="num"><span data-count="7">0</span><span class="unit">yrs</span></div><div class="desc">Combined experience — 4.5 in analytics &amp; experimentation, 2.5 grounded in frontline product ops.</div><div class="tag">Career</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work">
+  <div class="wrap">
+    <div class="eyebrow reveal">Selected Work</div>
+    <h2 class="title reveal">Things I've shipped.</h2>
+    <p class="lede reveal">Side projects where I take a raw dataset all the way to a deployed, working dashboard — same rigor as the day job, just for fun.</p>
+
+    <div class="work-featured reveal">
+      <div class="work-media">
+        <img src="assets/project-fifa.jpg" alt="Screenshot of the FIFA World Cup executive dashboard — KPI cards and matches/goals-per-edition chart" loading="lazy">
+      </div>
+      <div class="work-body">
+        <div class="work-badge">Latest</div>
+        <h3>FIFA World Cup Analytics Dashboard</h3>
+        <p>An executive dashboard built from 1,069 FIFA World Cup matches (1930–2026). Found and fixed a real data quality bug in the source file — goal totals were silently zeroed out for 15 editions — then shipped KPI cards, trend charts, and a full champions timeline from the corrected data.</p>
+        <div class="chip-row">
+          <span class="chip">HTML/CSS/JS</span><span class="chip">Chart.js</span><span class="chip">Data Cleaning</span><span class="chip">GitHub Pages</span>
+        </div>
+        <div class="work-links">
+          <a class="btn primary" href="https://dsb-faw.github.io/fifa_worldcup_analytics/" target="_blank" rel="noopener">View Live ↗</a>
+          <a class="btn" href="https://github.com/DSB-faw/fifa_worldcup_analytics" target="_blank" rel="noopener">View Code ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-list reveal">
+      <div class="work-row">
+        <div class="work-row-status">Coming Soon</div>
+        <div class="work-row-title">New Dashboard</div>
+        <div class="work-row-desc">Another dataset, another deep dive — in progress.</div>
+      </div>
+      <a class="work-row link-row" href="#contact">
+        <div class="work-row-status">Open To Ideas</div>
+        <div class="work-row-title">Got a dataset in mind?</div>
+        <div class="work-row-desc">Tell me what you'd want turned into a dashboard →</div>
+      </a>
     </div>
   </div>
 </section>
@@ -482,7 +551,7 @@ document.addEventListener('scroll', updateProgress, {passive:true});
 updateProgress();
 
 // ---------- nav active state + dotnav ----------
-const sections = ['hero','story','impact','skills','education','contact'].map(id => document.getElementById(id));
+const sections = ['hero','story','impact','work','skills','education','contact'].map(id => document.getElementById(id));
 const navLinks = document.querySelectorAll('nav.links a[data-nav]');
 const dotLinks = document.querySelectorAll('#dotnav a');
 const io = new IntersectionObserver((entries) => {
